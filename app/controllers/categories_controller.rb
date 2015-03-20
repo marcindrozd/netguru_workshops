@@ -1,5 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :authenticate_user!, only: [:new, :edit, :update, :destroy, :create]
+  before_action :require_admin, only: [:new, :create, :edit, :update]
 
   expose(:categories)
   expose(:category)
@@ -41,7 +42,7 @@ class CategoriesController < ApplicationController
   end
 
   private
-  
+
   def category_params
     params.require(:category).permit(:name)
   end
