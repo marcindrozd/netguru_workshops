@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :authenticate_user!, only: [:new, :edit, :update, :destroy, :create]
-  
+
   expose(:categories)
   expose(:category)
   expose(:product) { Product.new }
@@ -41,7 +41,8 @@ class CategoriesController < ApplicationController
   end
 
   private
-    def category_params
-      params.require(:category).permit(:name)
-    end
+  
+  def category_params
+    params.require(:category).permit(:name)
+  end
 end
