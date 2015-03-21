@@ -1,4 +1,6 @@
 class ReviewsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :require_owner, only: [:edit, :destroy]
 
   expose(:review)
   expose(:product)
@@ -7,7 +9,7 @@ class ReviewsController < ApplicationController
   end
 
   def create
-    self.review = Review.new(review_params)
+    self.review = current_user.reviews.new(review_params)
 
     if review.save
       product.reviews << review
@@ -23,7 +25,15 @@ class ReviewsController < ApplicationController
   end
 
   private
-    def review_params
-      params.require(:review).permit(:content, :rating)
+
+  def review_params
+    params.require(:review).permit(:content, :rating)
+  end
+
+  def require_owner
+    if current_user != review.user
+      flash[:error] = "You are not allowed to do that!"
+      redirect_to category_product_url(product.category, product)
     end
+  end
 end

@@ -2,3 +2,4 @@
 %p
   %b= review.rating
   %em= review.author
+  = link_to "Delete", category_product_review_path(id: review.id, product_id: product.id), method: "delete"
