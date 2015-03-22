@@ -27,7 +27,7 @@ class ProductsController < ApplicationController
       category.products << product
       redirect_to category_product_url(category, product), notice: 'Product was successfully created.'
     else
-      render action: 'new'
+      render template: '/categories/show'
     end
   end
 

@@ -17,7 +17,5 @@
           %td= link_to 'Edit', edit_category_path(category)
           %td= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' }
 
-%br
-
 - if current_user && current_user.admin?
   = link_to '+ New Category', new_category_path

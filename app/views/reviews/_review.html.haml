@@ -5,4 +5,5 @@
     %em by #{review.author}
 
   %p
-    = link_to "Delete review", category_product_review_path(id: review.id, product_id: product.id), method: "delete"
+    - if current_user && current_user.is_product_owner?(review)
+      = link_to "Delete review", category_product_review_path(id: review.id, product_id: product.id), method: "delete"
