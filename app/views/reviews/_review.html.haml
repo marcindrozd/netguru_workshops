@@ -1,5 +1,8 @@
-%p= review.content
-%p
-  %b= review.rating
-  %em= review.author
-  = link_to "Delete", category_product_review_path(id: review.id, product_id: product.id), method: "delete"
+.well
+  %p= review.content
+  %b Rating: #{review.rating}
+  %p
+    %em by #{review.author}
+
+  %p
+    = link_to "Delete review", category_product_review_path(id: review.id, product_id: product.id), method: "delete"

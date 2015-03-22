@@ -1,19 +1,28 @@
 %p#notice= notice
 
-%p
-  %b Name:
-  = category.name
+%p.col-md-12
+  = link_to '< Back', categories_path, class: 'btn btn-primary'
 
-%p
-  - category.products.each do |product|
-    = link_to product.title, category_product_path(category, product)
+.col-md-6
+  .panel.panel-default
+    .panel-heading
+      %h3.panel-title
+        Category: #{category.name}
+        %span.small
+          - if current_user && current_user.admin?
+            = link_to 'Edit category name', edit_category_path(category)
 
-- if current_user
-  %p
-    %h3 New product
-    = render 'products/form'
+    .panel-body
+      %h4 Products in this category:
+      %ul
+      - category.products.each do |product|
+        %li= link_to product.title, category_product_path(category, product)
 
-- if current_user && current_user.admin?
-  = link_to 'Edit', edit_category_path(category)
-  \|
-= link_to 'Back', categories_path, class: 'btn btn-primary'
+.col-md-6
+  - if current_user
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title Add new product
+
+      .panel-body
+        = render 'products/form'

@@ -1,27 +1,42 @@
 %p#notice= notice
 %p#error= flash[:error]
 
-%p
-  %b Title:
-  = product.title
-%p
-  %b Description:
-  = product.description
-%p
-  %b Price:
-  = product.price
+%p.col-md-12
+  = link_to '< Back', category_products_path, class: 'btn btn-primary'
 
-%p
-  %b Category
-  = link_to product.category.name, category
+.col-md-8
+  .panel.panel-default
+    .panel-heading
+      %h3.panel-title.text-center
+        = product.title
+        %span.small
+          - if current_user && current_user.is_product_owner?(product)
+            = link_to 'Edit this product', edit_category_product_path(category.id, product.id)
 
-%h3 Reviews
-- if current_user
-  = render 'reviews/form'
+    .panel-body
+      %dl.dl-horizontal
+        %dt Price
+        %dd= product.price
 
-= render reviews
+        %dt Description
+        %dd= product.description
 
-- if current_user && current_user.is_product_owner?(product)
-  = link_to 'Edit', edit_category_product_path(category.id, product.id)
-  \|
-= link_to 'Back', category_products_path, class: 'btn btn-primary'
+        %dt Category
+        %dd= link_to product.category.name, category
+
+.col-md-4
+  .panel.panel-default
+    .panel-heading
+      %h4.panel-title Reviews
+
+    .panel-body
+      - if current_user
+        %h4 + Add Review
+        = render 'reviews/form'
+
+      %hr
+
+      - if product.reviews.any?
+        = render reviews
+      - else
+        Be the first to write a review!

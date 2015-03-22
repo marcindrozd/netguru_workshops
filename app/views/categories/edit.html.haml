@@ -1,7 +1,9 @@
-%h1 Editing category
+%p
+  = link_to '<- Back', categories_path, class: 'btn btn-primary'
 
-= render 'form'
+.panel.panel-default
+  .panel-heading
+    %h1.panel-title Editing category
 
-= link_to 'Show', category
-\|
-= link_to 'Back', categories_path, class: 'btn btn-primary'
+  .panel-body
+    = render 'form'
