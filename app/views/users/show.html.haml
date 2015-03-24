@@ -1,0 +1,28 @@
+%h1 #{@user.firstname} #{@user.lastname}'s profile
+
+.col-md-8
+  .panel.panel-default
+    .panel-heading
+      %h3.panel-title General Information
+
+    .panel-body
+      %dl.dl-horizontal
+        %dt First Name
+        %dd= @user.firstname
+
+        %dt Last Name
+        %dd= @user.lastname
+
+        %dt Email Address
+        %dd= @user.email
+
+.col-md-4
+  .panel.panel-default
+    .panel-heading
+      %h3.panel-title Recent reviews
+
+    .panel-body
+      - @reviews.each do |review|
+        .well
+          %p= review.content
+          %b Rating: #{review.rating}

@@ -10,6 +10,10 @@ class User < ActiveRecord::Base
   has_many :products
 
   def is_product_owner?(product)
-    self == product.user 
+    self == product.user
+  end
+
+  def recent_reviews
+    reviews.order('created_at DESC').limit(5)
   end
 end

@@ -150,10 +150,10 @@ describe ProductsController do
             expect(controller.product).to be_a_new(Product)
           end
 
-          it "re-renders the 'new' template" do
+          it "re-renders the template with the form" do
             Product.any_instance.stub(:save).and_return(false)
             post :create, { product: { 'title' => 'invalid value' }, category_id: category.to_param }
-            expect(response).to render_template('new')
+            expect(response).to render_template('categories/show')
           end
         end
       end

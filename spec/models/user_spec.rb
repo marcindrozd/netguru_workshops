@@ -22,4 +22,32 @@ describe User do
       expect(bob.is_product_owner?(product)).to be_falsey
     end
   end
+
+  describe "#recent_reviews" do
+    let(:alice) { create(:user) }
+
+    it "returns empty array if user has no reviews" do
+      expect(alice.recent_reviews).to eq([])
+    end
+
+    it "returns a review if user has 1 review" do
+      review = create(:review, user: alice)
+      expect(alice.recent_reviews).to eq([review])
+    end
+
+    it "returns all reviews if user has 5 reviews" do
+      5.times { create(:review, user: alice) }
+      expect(alice.recent_reviews.count).to eq(5)
+    end
+
+    it "returns max 5 reviews from newest to oldest if user has more than 5 reviews" do
+      review1 = create(:review, user: alice)
+      review2 = create(:review, user: alice)
+      review3 = create(:review, user: alice)
+      review4 = create(:review, user: alice)
+      review5 = create(:review, user: alice)
+      review6 = create(:review, user: alice, created_at: 2.days.ago)
+      expect(alice.recent_reviews).to eq([review5, review4, review3, review2, review1])
+    end
+  end
 end
