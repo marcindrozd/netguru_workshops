@@ -1,4 +1,5 @@
-%h1 #{@user.firstname} #{@user.lastname}'s profile
+.col-md-12
+  %h1 #{@user.firstname} #{@user.lastname}'s profile
 
 .col-md-8
   .panel.panel-default
@@ -24,5 +25,6 @@
     .panel-body
       - @reviews.each do |review|
         .well
-          %p= review.content
+          %p Reviewed: #{review.product.title}
+          %p "#{review.content}"
           %b Rating: #{review.rating}
