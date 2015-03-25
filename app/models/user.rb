@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   has_many :products
 
   def is_product_owner?(product)
-    self == product.user
+    self == product.user || self.admin?
   end
 
   def recent_reviews

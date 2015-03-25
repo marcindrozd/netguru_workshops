@@ -25,7 +25,8 @@ class ProductsController < ApplicationController
 
     if product.save
       category.products << product
-      redirect_to category_product_url(category, product), notice: 'Product was successfully created.'
+      flash["notice"] = "Product was successfully created."
+      redirect_to category_product_url(category, product)
     else
       render template: '/categories/show'
     end
@@ -33,16 +34,17 @@ class ProductsController < ApplicationController
 
   def update
     if self.product.update(product_params)
-      redirect_to category_product_url(category, product), notice: 'Product was successfully updated.'
+      flash["notice"] = "Product was successfully updated."
+      redirect_to category_product_url(category, product)
     else
       render action: 'edit'
     end
   end
 
-  # DELETE /products/1
   def destroy
     product.destroy
-    redirect_to category_url(product.category), notice: 'Product was successfully destroyed.'
+    flash["notice"] = 'Product was successfully destroyed.'
+    redirect_to category_url(product.category)
   end
 
   private
@@ -52,7 +54,7 @@ class ProductsController < ApplicationController
   end
 
   def require_owner
-    if current_user != product.user
+    if (current_user != product.user && !current_user.admin?)
       flash[:error] = 'You are not allowed to edit this product.'
       redirect_to category_product_url(category, product)
     end

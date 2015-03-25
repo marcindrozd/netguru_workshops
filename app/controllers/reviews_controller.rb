@@ -15,16 +15,18 @@ class ReviewsController < ApplicationController
 
     if review.save
       product.reviews << review
-      redirect_to category_product_url(product.category, product), notice: 'Review was successfully created.'
+      flash["notice"] = 'Review was successfully created.'
+      redirect_to category_product_url(product.category, product)
     else
-      flash.now[:danger] = "The review has not been added"
+      flash.now[:danger] = "There is something missing in your review!"
       render template: 'products/show'
     end
   end
 
   def destroy
     review.destroy
-    redirect_to category_product_url(product.category, product), notice: 'Review was successfully destroyed.'
+    flash["notice"] = 'Review was successfully destroyed.'
+    redirect_to category_product_url(product.category, product)
   end
 
   private
@@ -34,7 +36,7 @@ class ReviewsController < ApplicationController
   end
 
   def require_owner
-    if current_user != review.user
+    if (current_user != review.user && !current_user.admin?)
       flash[:error] = "You are not allowed to do that!"
       redirect_to category_product_url(product.category, product)
     end
