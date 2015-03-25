@@ -17,6 +17,7 @@ class ReviewsController < ApplicationController
       product.reviews << review
       redirect_to category_product_url(product.category, product), notice: 'Review was successfully created.'
     else
+      flash.now[:danger] = "The review has not been added"
       render template: 'products/show'
     end
   end

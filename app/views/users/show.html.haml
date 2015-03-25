@@ -25,6 +25,11 @@
     .panel-body
       - @reviews.each do |review|
         .well
-          %p Reviewed: #{review.product.title}
+          %p
+            On:
+            = display_date(review.created_at)
+          %p
+            Reviewed:
+            = link_to review.product.title, category_product_path(review.product.category, review.product)
           %p "#{review.content}"
           %b Rating: #{review.rating}

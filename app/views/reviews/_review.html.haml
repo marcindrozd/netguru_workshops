@@ -2,7 +2,9 @@
   %p "#{review.content}"
   %b Rating: #{review.rating}
   %p
-    %em by #{review.author}
+    %em
+      by
+      = link_to review.author, user_path(review.user)
 
   %p
     - if current_user && current_user.is_product_owner?(review)
